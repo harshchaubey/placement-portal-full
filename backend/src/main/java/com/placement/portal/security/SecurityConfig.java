@@ -74,7 +74,8 @@ public class SecurityConfig {
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowedOrigins(List.of("http://localhost:5173",
                                          "http://localhost:3000" ,
-                                        "https://placement-portal-full-production.up.railway.app"));
+                                        "https://placement-portal-full-production.up.railway.app",
+                                        "https://placement-portal-job.up.railway.app"));
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         config.setAllowedHeaders(List.of("*"));
         config.setAllowCredentials(true);
