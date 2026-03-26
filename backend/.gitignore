@@ -1,5 +1,8 @@
 HELP.md
-target/
+<<<<<<< HEAD
+=======
+
+>>>>>>> ec21754 (remove maven wrapper jar from gitignore)
 !**/src/main/**/target/
 !**/src/test/**/target/
 
