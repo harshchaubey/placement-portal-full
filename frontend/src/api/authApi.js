@@ -1,7 +1,8 @@
 import axios from "axios";
 
 const API = axios.create({
-baseURL: "https://placement-portal-full-production.up.railway.app"
+  // Use environment variable if defined, otherwise fallback to the local Docker backend
+  baseURL: import.meta.env.VITE_API_URL || "http://localhost:8080"
 });
 
 API.interceptors.request.use((config) => {

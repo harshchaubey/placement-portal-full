@@ -41,6 +41,8 @@ public class JobServiceImpl implements JobService {
          job.setMinCgpa(dto.getMinCgpa());
          job.setEligibleBranch(dto.getEligibleBranch());
          job.setLastDate(dto.getLastDate());
+         job.setSalary(dto.getSalary());
+         job.setSkills(dto.getSkills());
          job.setCompany(company);
 
          Job savedJob = jobRepository.save(job);
@@ -90,8 +92,11 @@ public class JobServiceImpl implements JobService {
                 job.getMinCgpa(),
                 job.getEligibleBranch(),
                 job.getLastDate(),
-                job.getCompany() != null ? job.getCompany().getId() : null,   // ✅ FIX
-                job.getCompany() != null ? job.getCompany().getCompanyName() : null
+                job.getSalary(),
+                job.getSkills(),
+                job.getCompany() != null ? job.getCompany().getId() : null,
+                job.getCompany() != null ? job.getCompany().getCompanyName() : null,
+                job.getCompany() != null ? job.getCompany().getLocation() : null
         );
     }
      }

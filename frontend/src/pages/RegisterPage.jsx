@@ -1,15 +1,21 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { registerUser } from "../api/authApi";
+import { Mail, Lock, User, Briefcase, GraduationCap, ChevronDown } from "lucide-react";
+import "./landing.css";
 
 function RegisterPage() {
   const navigate = useNavigate();
+  const location = useLocation();
 
   const [form, setForm] = useState({
     email: "",
     password: "",
     role: ""
   });
+  
+  const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -17,80 +23,113 @@ function RegisterPage() {
 
   const handleRegister = async (e) => {
     e.preventDefault();
+    setError("");
+    
+    if (!form.email || !form.password || !form.role) {
+        setError("Please fill in all fields to continue.");
+        return;
+    }
 
     try {
+      setIsLoading(true);
       await registerUser(form);
-
-      alert("Registered successfully ✅");
-
-      // 👉 redirect to profile completion
       navigate("/complete-profile", { state: { role: form.role } });
-
     } catch (err) {
-      alert("Registration failed ❌");
+      setError(err?.response?.data?.message || err?.message || "Registration failed. Please try again.");
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return (
-    <div
-      className="d-flex justify-content-center align-items-center vh-100"
-      style={{
-        background: "linear-gradient(to right, #4facfe, #00f2fe)"
-      }}
-    >
-      <div className="card p-4 shadow" style={{ width: "400px" }}>
-        <h3 className="text-center mb-3">📝 Register</h3>
+    <div className="landing-wrapper">
+      <div className="landing-bg-glow"></div>
+      
+      {/* Brand Logo Corner */}
+      <div 
+        className="brand-logo" 
+        style={{ position: 'absolute', top: '2rem', left: '2rem', cursor: 'pointer', zIndex: 100 }}
+        onClick={() => navigate("/")}
+      >
+        <GraduationCap className="text-primary" size={32} />
+        PlacePort
+      </div>
 
-        <form onSubmit={handleRegister}>
+      <div className="auth-container">
+        <div className="auth-card">
+          <h2>Create Account</h2>
 
-          {/* EMAIL */}
-          <input
-            type="email"
-            name="email"
-            placeholder="Email"
-            className="form-control mb-3"
-            onChange={handleChange}
-            required
-          />
+          {error && (
+            <div className="alert alert-danger text-center" style={{background: 'rgba(220, 38, 38, 0.2)', color: '#fca5a5', border: '1px solid #ef4444', borderRadius: '12px'}} role="alert">
+              {error}
+            </div>
+          )}
 
-          {/* PASSWORD */}
-          <input
-            type="password"
-            name="password"
-            placeholder="Password"
-            className="form-control mb-3"
-            onChange={handleChange}
-            required
-          />
+          <form onSubmit={handleRegister} noValidate>
+            <div className="auth-form-group">
+              <label>Email Address</label>
+              <div className="auth-input-wrapper">
+                <Mail size={18} />
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="name@university.edu"
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+            </div>
 
-          {/* ROLE */}
-          <select
-            name="role"
-            className="form-control mb-3"
-            onChange={handleChange}
-            required
-          >
-            <option value="">Select Role</option>
-            <option value="STUDENT">Student</option>
-            <option value="COMPANY">Company</option>
-          </select>
+            <div className="auth-form-group">
+              <label>Password</label>
+              <div className="auth-input-wrapper">
+                <Lock size={18} />
+                <input
+                  type="password"
+                  name="password"
+                  placeholder="Create a strong password"
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+            </div>
 
-          {/* BUTTON */}
-          <button className="btn btn-primary w-100">
-            Register
-          </button>
+            <div className="auth-form-group">
+              <label>Account Type</label>
+              <div className="auth-input-wrapper" style={{ position: 'relative' }}>
+                <User size={18} />
+                <select
+                  name="role"
+                  onChange={handleChange}
+                  required
+                >
+                  <option value="" disabled selected>Select Role</option>
+                  <option value="STUDENT">Student Candidate</option>
+                  <option value="COMPANY">Hiring Company</option>
+                </select>
+                <ChevronDown size={18} style={{ position: 'absolute', right: '1rem', color: 'var(--text-muted)' }} />
+              </div>
+            </div>
 
-        </form>
-
-        <p className="text-center mt-3">
-          Already have an account?{" "}
-          <span
-            style={{ color: "blue", cursor: "pointer" }}
-            onClick={() => navigate("/login")}
-          >
-            Login
-          </span>
-        </p>
+            <button 
+              className="btn-gradient w-100 mt-4" 
+              style={{ padding: '1rem', fontSize: '1.1rem', borderRadius: '12px' }}
+              disabled={isLoading}
+            >
+              {isLoading ? "Creating Account..." : "Join PlacePort"}
+            </button>
+            
+            <p className="text-center mt-4" style={{ color: "var(--text-muted)" }}>
+              Already registered?{" "}
+              <span
+                style={{ color: "var(--accent)", cursor: "pointer", fontWeight: "600" }}
+                onClick={() => navigate(`/login${location.search}`)}
+              >
+                Log in
+              </span>
+            </p>
+          </form>
+        </div>
       </div>
     </div>
   );

@@ -2,375 +2,390 @@ import { useEffect, useState } from "react";
 import "./dashboard.css";
 import { useNavigate } from "react-router-dom";
 import { logout } from "../auth/auth";
-import { getCurrentUser } from "../api/authApi";
-import{ getCompanyProfile } from "../api/authApi";
-import { createJob } from "../api/jobApi";
-import { getCompanyJobs } from "../api/jobApi";
-import { getApplicationsByJob } from "../api/authApi";
+import { getCurrentUser, getCompanyProfile, getApplicationsByJob } from "../api/authApi";
+import { createJob, getCompanyJobs } from "../api/jobApi";
 import { createPortal } from "react-dom";
+import { 
+  LayoutDashboard, 
+  PlusCircle, 
+  Briefcase, 
+  User, 
+  LogOut, 
+  MapPin, 
+  Building, 
+  Mail, 
+  Users, 
+  CheckCircle,
+  GraduationCap
+} from "lucide-react";
 
 function CompanyDashboard() {
-
   const [user, setUser] = useState({});
   const [jobs, setJobs] = useState([]);
   const [activeMenu, setActiveMenu] = useState("Dashboard");
   const [profile, setProfile] = useState({});
-  const [applications, setApplications] = useState([]);
-  const [selectedJob, setSelectedJob] = useState(null);
-  const [jobApplications, setJobApplications] = useState([]);
   const [showApplicants, setShowApplicants] = useState(false);
+  const [jobApplications, setJobApplications] = useState([]);
 
   const [jobData, setJobData] = useState({
     title: "",
     description: "",
-    minCgpa: ""
+    minCgpa: "",
+    salary: "",
+    skills: ""
   });
 
   const navigate = useNavigate();
 
   const menuItems = [
-    "Dashboard",
-    "Post Job",
-    "My Jobs",
-    "Profile"
+    { name: "Dashboard", icon: <LayoutDashboard size={20} /> },
+    { name: "Post Job", icon: <PlusCircle size={20} /> },
+    { name: "My Jobs", icon: <Briefcase size={20} /> },
+    { name: "Profile", icon: <User size={20} /> }
   ];
-
-
 
   const handleLogout = () => {
     logout();
     navigate("/login");
   };
 
- const handlePostJob = async () => {
-   try {
-     await createJob(jobData);  // ✅ no id
-     alert("Job posted successfully ✅");
-     setJobData({
-       title: "",
-       description: "",
-       minCgpa: ""
-     });
-     setActiveMenu("Jobs"); // optional
-   } catch (err) {
-     console.error(err);
-     alert("Error posting job ❌");
-   }
- };
-const handleViewApplicants = async (jobId) => {
-  console.log("Function called with jobId:", jobId); // 👈 ADD
-
-  try {
-    const res = await getApplicationsByJob(jobId);
-    console.log("Applications:", res.data);
-
-    setJobApplications(
-      Array.isArray(res.data)
-        ? res.data
-        : res.data.data || res.data.applications || []
-    );
-
-    setShowApplicants(true);
-
-  } catch (err) {
-    console.error(err);
-  }
-};
-
-useEffect(() => {
-  const fetchData = async () => {
+  const handlePostJob = async () => {
     try {
-      const userRes = await getCurrentUser();
-      setUser(userRes.data);
-
-      const profileRes = await getCompanyProfile();
-      setProfile(profileRes.data);
-
-      // ✅ directly call applications API
+      const payload = {
+        ...jobData,
+        skills: jobData.skills ? jobData.skills.split(',').map(s => s.trim()).filter(Boolean) : []
+      };
+      await createJob(payload);
+      alert("Job posted successfully ✅");
+      setJobData({
+        title: "",
+        description: "",
+        minCgpa: "",
+        salary: "",
+        skills: ""
+      });
+      
+      // refresh jobs
       const res = await getCompanyJobs();
-       console.log("Jobs:", res.data);
       setJobs(res.data);
 
+      setActiveMenu("My Jobs"); 
     } catch (err) {
       console.error(err);
-      alert("Error fetching data ❌");
+      alert("Error posting job ❌");
     }
   };
 
-  fetchData(); // ✅ VERY IMPORTANT
+  const handleViewApplicants = async (jobId) => {
+    try {
+      const res = await getApplicationsByJob(jobId);
+      setJobApplications(
+        Array.isArray(res.data)
+          ? res.data
+          : res.data.data || res.data.applications || []
+      );
+      setShowApplicants(true);
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
-}, []);
-console.log("showApplicants:", showApplicants);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const userRes = await getCurrentUser();
+        setUser(userRes.data);
+
+        const profileRes = await getCompanyProfile();
+        setProfile(profileRes.data);
+
+        const res = await getCompanyJobs();
+        setJobs(res.data);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+    fetchData();
+  }, []);
+
   return (
-    <div className="dashboard">
+    <div className="dashboard-wrapper">
+      
+      {/* 🔮 Background Glow */}
+      <div className="landing-bg-glow"></div>
 
       {/* 🔵 SIDEBAR */}
       <div className="sidebar">
-        <div className="logo">🏢</div>
+        <div className="brand-logo" onClick={() => navigate("/")} style={{cursor: 'pointer'}}>
+          <GraduationCap className="icon" size={32} />
+          PlacePort
+        </div>
 
         <ul>
           {menuItems.map((item, index) => (
             <li
               key={index}
-              className={activeMenu === item ? "active" : ""}
-              onClick={() => setActiveMenu(item)}
+              className={activeMenu === item.name ? "active" : ""}
+              onClick={() => setActiveMenu(item.name)}
             >
-              {item}
+              <span className="icon">{item.icon}</span>
+              {item.name}
             </li>
           ))}
         </ul>
 
         <div className="logout" onClick={handleLogout}>
-          Logout
+          <LogOut size={20} />
+          <span>Logout</span>
         </div>
       </div>
 
       {/* 🔷 MAIN */}
-      <div
-        className="main"
-        style={{
-          flex: 1,
-          padding: "20px",
-          backgroundColor: "#f5f7fb",
-          minHeight: "100vh"
-        }}
-      >
-
+      <div className="main-content">
+        
         {/* 🔝 TOPBAR */}
         <div className="topbar">
-          <h5>{user?.name || "Company"}</h5>
+          <h2>{activeMenu}</h2>
+          <div className="profile-badge" style={{display: 'flex', alignItems: 'center', gap: '10px', background: 'var(--glass-bg)', padding: '10px 20px', borderRadius: '30px', border: '1px solid var(--glass-border)', backdropFilter: 'blur(10px)'}}>
+            <Building size={18} color="var(--primary)" />
+            <span style={{fontWeight: '600'}}>{user?.name || "Company Portal"}</span>
+          </div>
         </div>
 
         {/* 🔥 DASHBOARD */}
         {activeMenu === "Dashboard" && (
-          <>
-            <div className="welcome">
-              <div>
-                <h2>Welcome, {user?.name}</h2>
-                <p>Manage your job postings</p>
-              </div>
+          <div className="animate__animated animate__fadeIn">
+            <div className="welcome-widget">
+              <h1>Welcome back, <span style={{color: '#ff0080'}}>{user?.name?.split(' ')[0] || "Partner"}</span> 👋</h1>
+              <p>Here's what's happening with your job postings today.</p>
             </div>
 
-            <div className="stats">
-              <div className="card">
-                <h3>{jobs.length}</h3>
-                <p>Total Jobs Posted</p>
+            <div className="stats-grid">
+              <div className="stat-card">
+                <div className="stat-icon">
+                  <Briefcase strokeWidth={2.5} />
+                </div>
+                <div className="stat-info">
+                  <h3>{jobs.length}</h3>
+                  <p>Active Postings</p>
+                </div>
+              </div>
+              <div className="stat-card">
+                <div className="stat-icon" style={{color: '#ff0080', background: 'rgba(255, 0, 128, 0.1)'}}>
+                  <Users strokeWidth={2.5} />
+                </div>
+                <div className="stat-info">
+                  <h3>0</h3>
+                  <p>Total Applicants</p>
+                </div>
+              </div>
+              <div className="stat-card">
+                <div className="stat-icon" style={{color: '#00e676', background: 'rgba(0, 230, 118, 0.1)'}}>
+                  <CheckCircle strokeWidth={2.5} />
+                </div>
+                <div className="stat-info">
+                  <h3>0</h3>
+                  <p>Hired Students</p>
+                </div>
               </div>
             </div>
-          </>
+          </div>
         )}
 
-      {/* 🟢 POST JOB */}
-      {activeMenu === "Post Job" && (
-        <div
-          className="card shadow"
-          style={{
-            borderRadius: "15px",
-            padding: "25px",
-            maxWidth: "500px",
-            margin: "auto"
-          }}
-        >
-          <h4 className="mb-4 text-center">🚀 Post a Job</h4>
+        {/* 🟢 POST JOB */}
+        {activeMenu === "Post Job" && (
+          <div className="glass-form-card animate__animated animate__fadeInUp">
+            <h3>🚀 Create New Posting</h3>
 
-          {/* Job Title */}
-          <div className="mb-3">
-            <label className="form-label">Job Title</label>
-            <input
-              type="text"
-              className="form-control"
-              placeholder="Enter job title"
-              value={jobData.title}
-              onChange={(e) =>
-                setJobData({ ...jobData, title: e.target.value })
-              }
-            />
+            <div className="form-group">
+              <label>Job Title</label>
+              <input
+                type="text"
+                className="form-control"
+                placeholder="Select or enter job title"
+                list="job-titles"
+                value={jobData.title}
+                onChange={(e) => setJobData({ ...jobData, title: e.target.value })}
+              />
+              <datalist id="job-titles">
+                <option value="Software Engineer" />
+                <option value="Frontend Developer" />
+                <option value="Backend Developer" />
+                <option value="Full Stack Developer" />
+                <option value="Android Developer" />
+                <option value="Data Analyst" />
+                <option value="UI/UX Designer" />
+                <option value="Cybersecurity" />
+              </datalist>
+            </div>
+
+            <div className="form-group">
+              <label>Role Description</label>
+              <textarea
+                className="form-control"
+                rows="4"
+                placeholder="Describe the responsibilities and expectations..."
+                value={jobData.description}
+                onChange={(e) => setJobData({ ...jobData, description: e.target.value })}
+              />
+            </div>
+
+            <div style={{display: 'flex', gap: '1.5rem'}}>
+              <div className="form-group" style={{flex: 1}}>
+                <label>Minimum CGPA</label>
+                <input
+                  type="number"
+                  className="form-control"
+                  placeholder="e.g. 7.5"
+                  value={jobData.minCgpa}
+                  onChange={(e) => setJobData({ ...jobData, minCgpa: e.target.value })}
+                />
+              </div>
+
+              <div className="form-group" style={{flex: 1}}>
+                <label>Salary Range</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="e.g. 10LPA - 15LPA"
+                  value={jobData.salary}
+                  onChange={(e) => setJobData({ ...jobData, salary: e.target.value })}
+                />
+              </div>
+            </div>
+
+            <div className="form-group">
+              <label>Required Skills (Comma separated)</label>
+              <input
+                type="text"
+                className="form-control"
+                placeholder="e.g. React.js, Node.js, Mongoose"
+                value={jobData.skills}
+                onChange={(e) => setJobData({ ...jobData, skills: e.target.value })}
+              />
+            </div>
+
+            <button onClick={handlePostJob} className="btn-glossy" style={{marginTop: '2rem'}}>
+              <PlusCircle size={20} /> Publish Job Posting
+            </button>
           </div>
-
-          {/* Description */}
-          <div className="mb-3">
-            <label className="form-label">Description</label>
-            <textarea
-              className="form-control"
-              rows="3"
-              placeholder="Enter job description"
-              value={jobData.description}
-              onChange={(e) =>
-                setJobData({ ...jobData, description: e.target.value })
-              }
-            />
-          </div>
-
-          {/* CGPA */}
-          <div className="mb-3">
-            <label className="form-label">Minimum CGPA</label>
-            <input
-              type="number"
-              className="form-control"
-              placeholder="e.g. 7.5"
-              value={jobData.minCgpa}
-              onChange={(e) =>
-                setJobData({ ...jobData, minCgpa: e.target.value })
-              }
-            />
-          </div>
-
-          {/* BUTTON */}
-          <button
-            onClick={handlePostJob}
-            className="btn btn-primary w-100"
-            style={{
-              borderRadius: "20px",
-              fontWeight: "500"
-            }}
-          >
-            ➕ Post Job
-          </button>
-        </div>
-      )}
-
+        )}
 
         {/* 🔵 MY JOBS */}
-    {activeMenu === "My Jobs" && (
-      <div className="jobs-container">
-        <div className="jobs-header">
-          <h2>My Jobs</h2>
-          <span>{jobs.length} Jobs Posted</span>
-        </div>
-
-        {jobs.length === 0 ? (
-          <div className="no-jobs">
-            <p>No jobs posted yet 🚫</p>
-          </div>
-        ) : (
-          <div className="jobs-grid">
-            {jobs.map((job) => (
-              <div className="job-card" key={job.id}>
-
-                <div className="job-top">
-                  <h3>{job.title}</h3>
-                  <span className="cgpa">CGPA ≥ {job.minCgpa}</span>
-                </div>
-
-                <p className="job-desc">{job.description}</p>
-
-                <div className="job-actions">
-                 <button
-                   className="view-btn"
-                   onClick={() => {
-                     console.log("Clicked job:", job.id); // 👈 ADD THIS
-                     handleViewApplicants(job.id);
-                   }}
-                 >
-                   View Applicants
-                 </button>
-                  <button className="delete-btn">Delete</button>
-                </div>
-
+        {activeMenu === "My Jobs" && (
+          <div className="animate__animated animate__fadeIn">
+            {jobs.length === 0 ? (
+              <div style={{textAlign: 'center', padding: '5rem', background: 'var(--glass-bg)', borderRadius: '20px', border: '1px solid var(--glass-border)'}}>
+                <Briefcase size={48} style={{opacity: 0.3, marginBottom: '1rem'}} />
+                <h3>No active postings yet</h3>
+                <p style={{color: 'var(--text-muted)'}}>Head over to 'Post Job' to publish your first role.</p>
+                <button onClick={() => setActiveMenu('Post Job')} className="btn-glossy" style={{width: 'auto', padding: '0.8rem 2rem', margin: '2rem auto 0'}}>Create Posting</button>
               </div>
-            ))}
+            ) : (
+              <div className="jobs-grid-glass">
+                {jobs.map((job) => (
+                  <div className="job-glass-card" key={job.id}>
+                    <div className="job-glass-header">
+                      <h3>{job.title}</h3>
+                      <span className="glass-badge">CGPA ≥ {job.minCgpa}</span>
+                    </div>
+                    
+                    <p className="job-glass-desc">{job.description?.substring(0, 100)}{job.description?.length > 100 ? '...' : ''}</p>
+                    
+                    <div style={{marginBottom: '1.5rem', color: 'var(--text-muted)', fontSize: '0.9rem'}}>
+                      {job.salary && <div style={{marginBottom: '0.3rem'}}>💰 {job.salary}</div>}
+                    </div>
+
+                    <div className="job-glass-actions">
+                      <button className="btn-glass-action primary" onClick={() => handleViewApplicants(job.id)}>
+                        <Users size={16} /> Applicants
+                      </button>
+                      <button className="btn-glass-action danger">
+                        Archive
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         )}
 
-
-
-      </div>
-    )}
-
-       {activeMenu === "Profile" && (
-         <div className="animate__animated animate__fadeIn">
-           {/* Header Section */}
-           <div className="d-flex align-items-center mb-4">
-             <div
-               className="rounded-circle bg-primary d-flex align-items-center justify-content-center text-white shadow-sm"
-               style={{ width: '64px', height: '64px', fontSize: '24px', fontWeight: 'bold' }}
-             >
-               {profile?.companyName?.charAt(0) || "C"}
-             </div>
-             <div className="ms-3">
-               <h4 className="mb-0 fw-bold text-dark">Company Profile</h4>
-               <p className="text-muted small mb-0">Manage your organization details</p>
-             </div>
-           </div>
-
-           <div className="card border-0 shadow-sm" style={{ borderRadius: '15px' }}>
-             <div className="card-body p-4">
-               <div className="row g-4">
-
-                 {/* Company Name Tile */}
-                 <div className="col-md-6">
-                   <label className="text-uppercase text-muted fw-bold small mb-1 d-block" style={{ letterSpacing: '1px' }}>
-                     Company Name
-                   </label>
-                   <div className="p-3 bg-light rounded-3 border-start border-primary border-4">
-                     <span className="fw-semibold text-dark">{profile?.companyName || "Not Set"}</span>
-                   </div>
-                 </div>
-
-                 {/* Email Tile */}
-                 <div className="col-md-6">
-                   <label className="text-uppercase text-muted fw-bold small mb-1 d-block" style={{ letterSpacing: '1px' }}>
-                     Registered Email
-                   </label>
-                   <div className="p-3 bg-light rounded-3 border-start border-info border-4">
-                     <span className="fw-semibold text-dark">{profile?.email}</span>
-                   </div>
-                 </div>
-
-                 {/* Location Tile */}
-                 <div className="col-12">
-                   <label className="text-uppercase text-muted fw-bold small mb-1 d-block" style={{ letterSpacing: '1px' }}>
-                     Headquarters / Location
-                   </label>
-                   <div className="p-3 bg-light rounded-3 border-start border-success border-4 d-flex align-items-center">
-                     <i className="bi bi-geo-alt-fill text-success me-2"></i>
-                     <span className="fw-semibold text-dark">{profile?.location || "Address not provided"}</span>
-                   </div>
-                 </div>
-
-               </div>
-
-               {/* Action Button */}
-               <div className="mt-4 pt-3 border-top">
-                 <button className="btn btn-outline-primary btn-sm rounded-pill px-4">
-                   Edit Profile
-                 </button>
-               </div>
-             </div>
-           </div>
-         </div>
-       )}
-
-{showApplicants &&
-  createPortal(
-    <div className="modal">
-      <div className="modal-content">
-
-        <h2>Applicants</h2>
-
-        {jobApplications.length > 0 ? (
-          jobApplications.map((app) => (
-            <div key={app.id} className="app-card">
-              <h3>{app.studentName}</h3>
-              <p>Job: {app.jobTitle}</p>
-              <p>Status: {app.status}</p>
+        {/* 🟢 PROFILE */}
+        {activeMenu === "Profile" && (
+          <div className="profile-glass-card animate__animated animate__fadeIn">
+            <div className="profile-header">
+              <div className="profile-avatar">
+                {profile?.companyName?.charAt(0) || user?.name?.charAt(0) || "C"}
+              </div>
+              <div>
+                <h2 style={{margin: '0 0 0.2rem 0', padding: 0, border: 'none'}}>{profile?.companyName || user?.name || "Company Name"}</h2>
+                <p style={{color: 'var(--text-muted)', margin: 0}}>Official Verified Partner</p>
+              </div>
             </div>
-          ))
-        ) : (
-          <p>No applicants</p>
+
+            <div className="profile-grid">
+              <div className="profile-field-glass">
+                <div className="profile-field-icon"><Building /></div>
+                <div className="profile-field-info">
+                  <label>Company Display Name</label>
+                  <span>{profile?.companyName || user?.name || "Not Set"}</span>
+                </div>
+              </div>
+
+              <div className="profile-field-glass">
+                <div className="profile-field-icon" style={{color: '#ff0080', background: 'rgba(255, 0, 128, 0.1)'}}><Mail /></div>
+                <div className="profile-field-info">
+                  <label>Registered Email</label>
+                  <span>{profile?.email || user?.email || "Not Set"}</span>
+                </div>
+              </div>
+
+              <div className="profile-field-glass" style={{gridColumn: '1 / -1'}}>
+                <div className="profile-field-icon" style={{color: '#00e676', background: 'rgba(0, 230, 118, 0.1)'}}><MapPin /></div>
+                <div className="profile-field-info">
+                  <label>Headquarters / Location</label>
+                  <span>{profile?.location || "Location not provided"}</span>
+                </div>
+              </div>
+            </div>
+          </div>
         )}
 
-        <button onClick={() => setShowApplicants(false)}>
-          Close
-        </button>
+        {/* 🧊 MODAL */}
+        {showApplicants &&
+          createPortal(
+            <div className="glass-modal-overlay animate__animated animate__fadeIn">
+              <div className="glass-modal-content animate__animated animate__zoomIn">
+                <h2>Applicant Tracking</h2>
+                
+                {jobApplications.length > 0 ? (
+                  jobApplications.map((app) => (
+                    <div key={app.id} className="applicant-card">
+                      <h3>{app.studentName}</h3>
+                      <p>Applied for: {app.jobTitle}</p>
+                      <p style={{color: '#ff0080'}}>Status: {app.status}</p>
+                    </div>
+                  ))
+                ) : (
+                  <div style={{textAlign: 'center', padding: '2rem 0'}}>
+                    <Users size={48} style={{opacity: 0.3, marginBottom: '1rem'}} />
+                    <p style={{color: 'var(--text-muted)'}}>No applications received yet.</p>
+                  </div>
+                )}
 
-
-
-      </div>
-    </div>,
-    document.body   // 🔥 THIS FIXES EVERYTHING
-  )
-}
+                <button 
+                  onClick={() => setShowApplicants(false)}
+                  className="btn-glass-action" 
+                  style={{marginTop: '2rem', width: '100%'}}
+                >
+                  Close Window
+                </button>
+              </div>
+            </div>,
+            document.body
+          )
+        }
       </div>
     </div>
   );

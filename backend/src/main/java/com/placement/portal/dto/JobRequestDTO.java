@@ -3,6 +3,8 @@ package com.placement.portal.dto;
 import jakarta.validation.constraints.*;
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 public class JobRequestDTO {
 
@@ -21,5 +23,8 @@ public class JobRequestDTO {
 
     @NotBlank(message = "Last date is required")
     private String lastDate;
+
+    private String salary;
+    private List<String> skills;
 }
 

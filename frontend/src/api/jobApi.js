@@ -31,13 +31,13 @@ export const createJob = (data) =>
 
 
   export const applyJob = async (jobId, formData) => {
-       API.post(`/applications/apply/${jobId}`,formData);
+       return API.post(`/applications/apply/${jobId}`,formData);
     };
 export const getCompanyJobs = () =>
     API.get(`/jobs/company`);
 
     export const getApplicationsByJob = (jobId) => {
-      return axios.get(`/applications/job/${jobId}`);
+      return API.get(`/applications/job/${jobId}`);
     };
 
 

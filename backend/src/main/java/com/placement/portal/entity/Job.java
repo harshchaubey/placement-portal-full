@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Entity
 @Data
 @NoArgsConstructor
@@ -21,6 +23,10 @@ public class Job {
     private double minCgpa;
     private String eligibleBranch;
     private String lastDate;
+    private String salary;
+
+    @ElementCollection
+    private List<String> skills;
 
     @ManyToOne
     @JoinColumn(name = "company_id") // create a foreign key column in the current table

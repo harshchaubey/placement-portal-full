@@ -1,0 +1,160 @@
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] ------------------------< com.placement:portal >------------------------
+[INFO] Building portal 0.0.1-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] >>> spring-boot:3.2.5:run (default-cli) > test-compile @ portal >>>
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ portal ---
+[INFO] Copying 1 resource from src/main/resources to target/classes
+[INFO] Copying 0 resource from src/main/resources to target/classes
+[INFO] 
+[INFO] --- compiler:3.11.0:compile (default-compile) @ portal ---
+[INFO] Changes detected - recompiling the module! :source
+[INFO] Compiling 52 source files with javac [debug release 21] to target/classes
+[INFO] Annotation processing is enabled because one or more processors were found
+  on the class path. A future release of javac may disable annotation processing
+  unless at least one processor is specified by name (-processor), or a search
+  path is specified (--processor-path, --processor-module-path), or annotation
+  processing is enabled explicitly (-proc:only, -proc:full).
+  Use -Xlint:-options to suppress this message.
+  Use -proc:none to disable annotation processing.
+[INFO] /home/harshubuntu/placement-portal-full/backend/src/main/java/com/placement/portal/security/JwtUtil.java: /home/harshubuntu/placement-portal-full/backend/src/main/java/com/placement/portal/security/JwtUtil.java uses or overrides a deprecated API.
+[INFO] /home/harshubuntu/placement-portal-full/backend/src/main/java/com/placement/portal/security/JwtUtil.java: Recompile with -Xlint:deprecation for details.
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ portal ---
+[INFO] skip non existing resourceDirectory /home/harshubuntu/placement-portal-full/backend/src/test/resources
+[INFO] 
+[INFO] --- compiler:3.11.0:testCompile (default-testCompile) @ portal ---
+[INFO] Changes detected - recompiling the module! :dependency
+[INFO] Compiling 1 source file with javac [debug release 21] to target/test-classes
+[INFO] Annotation processing is enabled because one or more processors were found
+  on the class path. A future release of javac may disable annotation processing
+  unless at least one processor is specified by name (-processor), or a search
+  path is specified (--processor-path, --processor-module-path), or annotation
+  processing is enabled explicitly (-proc:only, -proc:full).
+  Use -Xlint:-options to suppress this message.
+  Use -proc:none to disable annotation processing.
+[INFO] 
+[INFO] <<< spring-boot:3.2.5:run (default-cli) < test-compile @ portal <<<
+[INFO] 
+[INFO] 
+[INFO] --- spring-boot:3.2.5:run (default-cli) @ portal ---
+[INFO] Attaching agents: []
+Standard Commons Logging discovery in action with spring-jcl: please remove commons-logging.jar from classpath in order to avoid potential conflicts
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v3.2.5)
+
+2026-03-28T16:43:58.557+05:30  INFO 122274 --- [portal] [           main] com.placement.portal.PortalApplication   : Starting PortalApplication using Java 21.0.10 with PID 122274 (/home/harshubuntu/placement-portal-full/backend/target/classes started by harshubuntu in /home/harshubuntu/placement-portal-full/backend)
+2026-03-28T16:43:58.558+05:30  INFO 122274 --- [portal] [           main] com.placement.portal.PortalApplication   : No active profile set, falling back to 1 default profile: "default"
+2026-03-28T16:43:59.021+05:30  INFO 122274 --- [portal] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-03-28T16:43:59.054+05:30  INFO 122274 --- [portal] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 29 ms. Found 5 JPA repository interfaces.
+2026-03-28T16:43:59.451+05:30  INFO 122274 --- [portal] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2026-03-28T16:43:59.459+05:30  INFO 122274 --- [portal] [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-03-28T16:43:59.460+05:30  INFO 122274 --- [portal] [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.20]
+2026-03-28T16:43:59.488+05:30  INFO 122274 --- [portal] [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-03-28T16:43:59.488+05:30  INFO 122274 --- [portal] [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 908 ms
+Standard Commons Logging discovery in action with spring-jcl: please remove commons-logging.jar from classpath in order to avoid potential conflicts
+2026-03-28T16:43:59.552+05:30  INFO 122274 --- [portal] [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-03-28T16:43:59.584+05:30  INFO 122274 --- [portal] [           main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.4.4.Final
+2026-03-28T16:43:59.598+05:30  INFO 122274 --- [portal] [           main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-03-28T16:43:59.721+05:30  INFO 122274 --- [portal] [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-03-28T16:43:59.738+05:30  INFO 122274 --- [portal] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-03-28T16:43:59.944+05:30  INFO 122274 --- [portal] [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@4813d0
+2026-03-28T16:43:59.946+05:30  INFO 122274 --- [portal] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-03-28T16:43:59.984+05:30  WARN 122274 --- [portal] [           main] org.hibernate.orm.deprecation            : HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-03-28T16:44:00.650+05:30  INFO 122274 --- [portal] [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-03-28T16:44:00.731+05:30  INFO 122274 --- [portal] [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-03-28T16:44:00.863+05:30 DEBUG 122274 --- [portal] [           main] o.s.web.filter.ForwardedHeaderFilter     : Filter 'forwardedHeaderFilter' configured for use
+2026-03-28T16:44:01.033+05:30  WARN 122274 --- [portal] [           main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-03-28T16:44:01.185+05:30 DEBUG 122274 --- [portal] [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : 32 mappings in 'requestMappingHandlerMapping'
+2026-03-28T16:44:01.246+05:30 DEBUG 122274 --- [portal] [           main] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/webjars/**, /**, /uploads/**, /swagger-ui*/*swagger-initializer.js, /swagger-ui*/**] in 'resourceHandlerMapping'
+2026-03-28T16:44:01.263+05:30  INFO 122274 --- [portal] [           main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@6a08113d, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@480fb706, org.springframework.security.web.context.SecurityContextHolderFilter@606d2a92, org.springframework.security.web.header.HeaderWriterFilter@6cd8c373, org.springframework.web.filter.CorsFilter@66d766b9, org.springframework.security.web.authentication.logout.LogoutFilter@2a41d17a, com.placement.portal.security.JwtFilter@533a27f8, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@72924f19, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@46c093b4, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@f36c8b1, org.springframework.security.web.access.ExceptionTranslationFilter@289b7efe, org.springframework.security.web.access.intercept.AuthorizationFilter@13563e64]
+2026-03-28T16:44:01.295+05:30 DEBUG 122274 --- [portal] [           main] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2026-03-28T16:44:01.310+05:30 DEBUG 122274 --- [portal] [           main] .m.m.a.ExceptionHandlerExceptionResolver : ControllerAdvice beans: 2 @ExceptionHandler, 1 ResponseBodyAdvice
+2026-03-28T16:44:01.417+05:30  INFO 122274 --- [portal] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path ''
+2026-03-28T16:44:01.429+05:30  INFO 122274 --- [portal] [           main] com.placement.portal.PortalApplication   : Started PortalApplication in 3.1 seconds (process running for 3.303)
+2026-03-28T16:49:05.099+05:30  INFO 122274 --- [portal] [nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-03-28T16:49:05.100+05:30  INFO 122274 --- [portal] [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-03-28T16:49:05.100+05:30 DEBUG 122274 --- [portal] [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Detected StandardServletMultipartResolver
+2026-03-28T16:49:05.100+05:30 DEBUG 122274 --- [portal] [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Detected AcceptHeaderLocaleResolver
+2026-03-28T16:49:05.100+05:30 DEBUG 122274 --- [portal] [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Detected FixedThemeResolver
+2026-03-28T16:49:05.102+05:30 DEBUG 122274 --- [portal] [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Detected org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator@50ac63b2
+2026-03-28T16:49:05.102+05:30 DEBUG 122274 --- [portal] [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Detected org.springframework.web.servlet.support.SessionFlashMapManager@79392584
+2026-03-28T16:49:05.102+05:30 DEBUG 122274 --- [portal] [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : enableLoggingRequestDetails='false': request parameters and headers will be masked to prevent unsafe logging of potentially sensitive data
+2026-03-28T16:49:05.102+05:30  INFO 122274 --- [portal] [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
+2026-03-28T16:50:31.191+05:30 DEBUG 122274 --- [portal] [nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : GET "/jobs/All", parameters={}
+2026-03-28T16:50:31.194+05:30 DEBUG 122274 --- [portal] [nio-8080-exec-2] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.placement.portal.controller.JobController#getAllJobs()
+Hibernate: select j1_0.id,j1_0.company_id,j1_0.description,j1_0.eligible_branch,j1_0.last_date,j1_0.min_cgpa,j1_0.salary,j1_0.title from jobs j1_0
+Hibernate: select c1_0.id,c1_0.company_name,c1_0.email,c1_0.location,c1_0.verified from companies c1_0 where c1_0.id=?
+Hibernate: select c1_0.id,c1_0.company_name,c1_0.email,c1_0.location,c1_0.verified from companies c1_0 where c1_0.id=?
+Hibernate: select c1_0.id,c1_0.company_name,c1_0.email,c1_0.location,c1_0.verified from companies c1_0 where c1_0.id=?
+TITLE FROM ENTITY: null
+TITLE FROM ENTITY: Software Engineer
+TITLE FROM ENTITY: engineering
+TITLE FROM ENTITY: 
+TITLE FROM ENTITY: 
+TITLE FROM ENTITY: Web Development
+TITLE FROM ENTITY: 5rtg
+TITLE FROM ENTITY: back
+TITLE FROM ENTITY: job
+2026-03-28T16:50:31.290+05:30 DEBUG 122274 --- [portal] [nio-8080-exec-2] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+Hibernate: select s1_0.job_id,s1_0.skills from job_skills s1_0 where s1_0.job_id=?
+Hibernate: select s1_0.job_id,s1_0.skills from job_skills s1_0 where s1_0.job_id=?
+Hibernate: select s1_0.job_id,s1_0.skills from job_skills s1_0 where s1_0.job_id=?
+Hibernate: select s1_0.job_id,s1_0.skills from job_skills s1_0 where s1_0.job_id=?
+Hibernate: select s1_0.job_id,s1_0.skills from job_skills s1_0 where s1_0.job_id=?
+Hibernate: select s1_0.job_id,s1_0.skills from job_skills s1_0 where s1_0.job_id=?
+Hibernate: select s1_0.job_id,s1_0.skills from job_skills s1_0 where s1_0.job_id=?
+Hibernate: select s1_0.job_id,s1_0.skills from job_skills s1_0 where s1_0.job_id=?
+Hibernate: select s1_0.job_id,s1_0.skills from job_skills s1_0 where s1_0.job_id=?
+2026-03-28T16:50:31.299+05:30 DEBUG 122274 --- [portal] [nio-8080-exec-2] m.m.a.RequestResponseBodyMethodProcessor : Writing [[JobResponseDTO(id=1, title=null, description=null, minCgpa=0.0, eligibleBranch=null, lastDate=null, (truncated)...]
+2026-03-28T16:50:31.324+05:30 DEBUG 122274 --- [portal] [nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2026-03-28T16:51:15.593+05:30 DEBUG 122274 --- [portal] [nio-8080-exec-4] o.s.web.servlet.DispatcherServlet        : GET "/jobs/All", parameters={}
+2026-03-28T16:51:15.593+05:30 DEBUG 122274 --- [portal] [nio-8080-exec-4] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.placement.portal.controller.JobController#getAllJobs()
+Hibernate: select j1_0.id,j1_0.company_id,j1_0.description,j1_0.eligible_branch,j1_0.last_date,j1_0.min_cgpa,j1_0.salary,j1_0.title from jobs j1_0
+Hibernate: select c1_0.id,c1_0.company_name,c1_0.email,c1_0.location,c1_0.verified from companies c1_0 where c1_0.id=?
+Hibernate: select c1_0.id,c1_0.company_name,c1_0.email,c1_0.location,c1_0.verified from companies c1_0 where c1_0.id=?
+Hibernate: select c1_0.id,c1_0.company_name,c1_0.email,c1_0.location,c1_0.verified from companies c1_0 where c1_0.id=?
+TITLE FROM ENTITY: null
+TITLE FROM ENTITY: Software Engineer
+TITLE FROM ENTITY: engineering
+TITLE FROM ENTITY: 
+TITLE FROM ENTITY: 
+TITLE FROM ENTITY: Web Development
+TITLE FROM ENTITY: 5rtg
+TITLE FROM ENTITY: back
+TITLE FROM ENTITY: job
+2026-03-28T16:51:15.599+05:30 DEBUG 122274 --- [portal] [nio-8080-exec-4] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+Hibernate: select s1_0.job_id,s1_0.skills from job_skills s1_0 where s1_0.job_id=?
+Hibernate: select s1_0.job_id,s1_0.skills from job_skills s1_0 where s1_0.job_id=?
+Hibernate: select s1_0.job_id,s1_0.skills from job_skills s1_0 where s1_0.job_id=?
+Hibernate: select s1_0.job_id,s1_0.skills from job_skills s1_0 where s1_0.job_id=?
+Hibernate: select s1_0.job_id,s1_0.skills from job_skills s1_0 where s1_0.job_id=?
+Hibernate: select s1_0.job_id,s1_0.skills from job_skills s1_0 where s1_0.job_id=?
+Hibernate: select s1_0.job_id,s1_0.skills from job_skills s1_0 where s1_0.job_id=?
+Hibernate: select s1_0.job_id,s1_0.skills from job_skills s1_0 where s1_0.job_id=?
+Hibernate: select s1_0.job_id,s1_0.skills from job_skills s1_0 where s1_0.job_id=?
+2026-03-28T16:51:15.603+05:30 DEBUG 122274 --- [portal] [nio-8080-exec-4] m.m.a.RequestResponseBodyMethodProcessor : Writing [[JobResponseDTO(id=1, title=null, description=null, minCgpa=0.0, eligibleBranch=null, lastDate=null, (truncated)...]
+2026-03-28T16:51:15.604+05:30 DEBUG 122274 --- [portal] [nio-8080-exec-4] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  01:33 h
+[INFO] Finished at: 2026-03-28T18:17:23+05:30
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.springframework.boot:spring-boot-maven-plugin:3.2.5:run (default-cli) on project portal: Process terminated with exit code: 137 -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoExecutionException
