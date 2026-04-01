@@ -90,6 +90,7 @@ public class AuthServiceImpl implements AuthService {
                 user = User.builder()
                         .email(email)
                         .googleId(googleId)
+                        .password(passwordEncoder.encode(java.util.UUID.randomUUID().toString()))
                         .role(Role.valueOf(role.toUpperCase()))
                         .build();
                 userRepository.save(user);
