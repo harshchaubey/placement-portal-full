@@ -197,7 +197,11 @@ Run the entire application (Frontend, Backend, MySQL) with a single command:
 git clone https://github.com/harshchaubey/PlacePort.git
 cd PlacePort
 
-# 2. Start all services
+# 2. Setup Configuration
+# Copy the example properties and provide your own credentials
+cp backend/src/main/resources/application.properties.example backend/src/main/resources/application.properties
+
+# 3. Start all services
 docker-compose up --build
 ```
 
@@ -224,8 +228,9 @@ docker-compose down
 ```bash
 cd backend
 
-# Configure database and secrets in:
-# src/main/resources/application.properties
+# Setup Configuration
+# Create your configuration file from the template and fill in your secrets
+cp src/main/resources/application.properties.example src/main/resources/application.properties
 
 # Run the Spring Boot server
 ./mvnw spring-boot:run
