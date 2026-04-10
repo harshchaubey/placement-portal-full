@@ -72,13 +72,16 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowedOrigins(List.of("http://localhost:5173",
+        config.setAllowedOriginPatterns(List.of(
+
                                          "http://localhost:5174",
                                          "http://localhost:5175",
                                          "http://localhost:5176",
                                          "http://localhost:3000" ,
-                                        "https://placement-portal-full-production.up.railway.app",
-                                        "https://placement-portal-job.up.railway.app"));
+                "http://localhost:*",
+                "https://*.vercel.app",
+                "https://*.onrender.com"
+        ));
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"));
         config.setAllowedHeaders(List.of("*"));
         config.setAllowCredentials(true);
