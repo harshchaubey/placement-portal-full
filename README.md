@@ -194,8 +194,8 @@ Run the entire application (Frontend, Backend, MySQL) with a single command:
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/harshchaubey/placement-portal-full.git
-cd placement-portal-full
+git clone https://github.com/harshchaubey/PlacePort.git
+cd PlacePort
 
 # 2. Start all services
 docker-compose up --build
