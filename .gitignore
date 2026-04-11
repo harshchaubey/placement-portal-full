@@ -20,8 +20,6 @@ backend/.mvn/wrapper/maven-wrapper.jar
 .env.test.local
 .env.production.local
 *.env
-backend/src/main/resources/application.properties
-
 # Build & Logs
 *.log
 npm-debug.log*
